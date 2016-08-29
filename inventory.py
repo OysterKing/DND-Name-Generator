@@ -9,12 +9,25 @@ class Inventory:
 	dlend_humanCmn = []
 	def __init__(self):
 		with open("drenlend_human_common.txt", 'r') as file:
-			self.dlend_humanCmn = file.readlines()
+			self.dlend_humanCmn = file.read().splitlines()
 			self.namesDict['drenlend_human_common'] = self.dlend_humanCmn
 			file.close()
 
-	def printNames(self):
-		print self.namesDict['drenlend_human_common']
+	def printNames(self, key):
+		print self.namesDict[key]
+
+	def addToNameList(self, name, key):
+		if key == 'drenlend_human_common':
+			if name in self.namesDict[key]:
+				print 'Name already exists...'
+			else:
+				print 'adding name...'
+				self.namesDict['drenlend_human_common'].append(name)
+				with open("drenlend_human_common.txt", 'a') as file:
+					file.write('\n' + name)
+					file.close()
 
 inventory = Inventory()
-inventory.printNames()
+inventory.printNames('drenlend_human_common')
+inventory.addToNameList('Borgen', 'drenlend_human_common')
+inventory.printNames('drenlend_human_common')
